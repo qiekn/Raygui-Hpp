@@ -63,3 +63,21 @@ if(BUILD_RAYGUI_HPP_MODULES)
     target_link_libraries(raygui_hpp_modules PUBLIC raygui_hpp)
     target_compile_features(raygui_hpp_modules PUBLIC cxx_std_23)
 endif()
+
+# --- examples (opt-in showcase of import raygui; / ck::gui::) ---
+# Off by default so a default parent-project build doesn't pay for 12 extra
+# executables. Enable with -DBUILD_RAYGUI_HPP_EXAMPLES=ON.
+option(BUILD_RAYGUI_HPP_EXAMPLES "Build raygui-hpp C++ examples" OFF)
+if(BUILD_RAYGUI_HPP_EXAMPLES)
+    if(NOT TARGET raygui_hpp_modules)
+        message(FATAL_ERROR
+            "BUILD_RAYGUI_HPP_EXAMPLES requires BUILD_RAYGUI_HPP_MODULES=ON "
+            "(the examples use `import raygui;`).")
+    endif()
+    if(NOT TARGET raylib_hpp_modules)
+        message(FATAL_ERROR
+            "BUILD_RAYGUI_HPP_EXAMPLES requires the parent project to expose "
+            "`raylib_hpp_modules` (the examples use `import raylib;`).")
+    endif()
+    add_subdirectory(examples)
+endif()

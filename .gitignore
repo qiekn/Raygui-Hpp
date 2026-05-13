@@ -1,0 +1,12 @@
+
+# qiekn's ignore
+/build/
+/examples/
+/projects/
+.cache/
+
+# raygui upstream single-header — must exist locally for the build to
+# configure, but not vendored in this repo (mirrors how Raylib-Hpp treats
+# refs/raylib). Fetch from https://github.com/raysan5/raygui.
+/raygui.h
+/src/raygui.h
